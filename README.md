@@ -1,0 +1,1 @@
+Here you can find all the information about MyFlixApplication's client side.
