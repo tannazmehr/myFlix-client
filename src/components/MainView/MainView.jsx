@@ -32,10 +32,7 @@ export function MainView() {
             });
 
             setMovies(moviesFromApi);
-        })
-        .catch((error) => {
-            console.error("Error fetching movies", error);
-        })
+        });
     }, [token]);
 
     if (!user) {
@@ -60,7 +57,7 @@ export function MainView() {
         );
     }
     if (movies.length === 0) {
-        return <div>The list id empty.</div>;
+        return <div>The list is empty.</div>;
     }
     return (
         <>

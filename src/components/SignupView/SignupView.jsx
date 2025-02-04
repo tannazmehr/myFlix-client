@@ -49,7 +49,7 @@ export const SignupView = () => {
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword / e.target.value}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
       </label>
@@ -72,6 +72,7 @@ export const SignupView = () => {
           type="date"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
+          required
         />
       </label>
       <br />
