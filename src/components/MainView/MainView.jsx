@@ -2,6 +2,8 @@ import React from "react";
 import { useState , useEffect } from "react";
 import { MovieView } from "../MovieView/MovieView";
 import { MovieCard } from "../MovieCard/MovieCard";
+import { LoginView } from "../LoginView/LoginView";
+import { SignupView } from "../SignupView/SignupView";
 
 export function MainView() {
     const storedUser = JSON.parse(localStorage.getItem("user"));
