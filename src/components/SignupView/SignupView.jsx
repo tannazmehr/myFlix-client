@@ -14,7 +14,7 @@ export const SignupView = () => {
       Email: email,
       Birthday: birthday,
     };
-    fetch("SIGNUP_URL", {
+    fetch("https://mymoviecircle-50f243eb6efe.herokuapp.com/users", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -38,7 +38,7 @@ export const SignupView = () => {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          minLength="6"
+          minLength="5"
           required
         />
       </label>

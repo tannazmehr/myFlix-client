@@ -19840,7 +19840,7 @@ const LoginView = ({ onLoggedIn })=>{
                         type: "text",
                         value: username,
                         onChange: (e)=>setUsername(e.target.value),
-                        minlength: "6",
+                        minLength: "6",
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/LoginView/LoginView.jsx",
@@ -19967,7 +19967,7 @@ const SignupView = ()=>{
                         type: "text",
                         value: username,
                         onChange: (e)=>setUsername(e.target.value),
-                        minlength: "6",
+                        minLength: "6",
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/SignupView/SignupView.jsx",
