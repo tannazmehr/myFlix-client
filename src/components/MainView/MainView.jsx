@@ -8,27 +8,27 @@ import { SignupView } from "../SignupView/SignupView";
 export function MainView() {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
+    const [user, setUser] = useState(storedUser? storedUser : null);
+    const [token, setToken] = useState(storedToken? storedToken : null)
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const [user, setUser] = useState(storedUser? storedUser : null);
-    const [token, setToken] = useState(storedToken? storedToken : null);
 
     useEffect(() => {
         if (!token) return;
 
         fetch("https://mymoviecircle-50f243eb6efe.herokuapp.com/movies", {
-            headers: { Authoritation: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => response.json())
         .then((data) => {
             const moviesFromApi = data.map((datum) => {
-               return {
-                id: datum._id,
-                Title: datum.Title,
-                Description: datum.Description,
-                Director: datum.Director.Name,
-                Genre: datum.Genre.Name
-               };
+                return {
+                    id: datum._id,
+                    Title: datum.Title,
+                    Description: datum.Description,
+                    Director: datum.Director.Name,
+                    Genre: datum.Genre.Name
+                   };
             });
 
             setMovies(moviesFromApi);

@@ -9,7 +9,7 @@ export const LoginView = ({ onLoggedIn }) => {
 
     const data = {
       Username: username,
-      Password: password,
+      Password: password
     };
 
     fetch("https://mymoviecircle-50f243eb6efe.herokuapp.com/login", {
