@@ -4,6 +4,7 @@ import { MovieView } from "../MovieView/MovieView";
 import { MovieCard } from "../MovieCard/MovieCard";
 import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../SignupView/SignupView";
+import { Row, Col, Button } from "react-bootstrap";
 
 export function MainView() {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -27,7 +28,8 @@ export function MainView() {
                     Title: datum.Title,
                     Description: datum.Description,
                     Director: datum.Director.Name,
-                    Genre: datum.Genre.Name
+                    Genre: datum.Genre.Name,
+                    Image: datum.ImagePath
                    };
             });
 
@@ -37,16 +39,24 @@ export function MainView() {
 
     if (!user) {
         return (
-          <>
-            <LoginView
-              onLoggedIn={(user, token) => {
-                setUser(user);
-                setToken(token);
-              }}
-            />
-            or
-            <SignupView />
-          </>
+            <>
+                <Row className="p-5">
+                    <h3>Welcome to my Movie collection</h3>
+                </Row>
+                <Row className="h-100">
+                    <Col className="mb-5" md={5}>
+                        <LoginView
+                        onLoggedIn={(user, token) => {
+                        setUser(user);
+                        setToken(token);
+                        }}
+                        />
+                    </Col>
+                    <Col md={{span:5, offset:1}}>
+                        <SignupView />
+                    </Col>
+                </Row>
+            </>
         );
       }
 
@@ -61,24 +71,29 @@ export function MainView() {
     }
     return (
         <>
-            <div>
+            <Row>
                 {movies.map((movie) => (
-                <MovieCard
-                key={movie.id}
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                    setSelectedMovie(newSelectedMovie);
-                }}
-                />   
+                  <Col className="mb-5"  md={4} key={movie.id}>
+                    <MovieCard
+                    movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                        setSelectedMovie(newSelectedMovie);
+                    }}
+                    />
+                </Col>   
                 ))}
-            </div>
-            <button
-                onClick={() =>{
-                setUser(null);
-                setToken(null);
-                localStorage.clear();
-                }}
-                >Log out</button>
+            </Row>
+            <Row className="position-relative">    
+                <Button
+                    className="w-25 position-absolute bottom-0 end-0"
+                    onClick={() =>{
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                    }}
+                    variant="outline-secondary"
+                    >Logout</Button>
+            </Row>
         </>
     );
 };
