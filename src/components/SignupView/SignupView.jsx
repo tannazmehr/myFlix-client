@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Card, CardGroup, Container, Col, Row } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -13,7 +13,7 @@ export const SignupView = () => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday,
+      Birthday: birthday
     };
     fetch("https://mymoviecircle-50f243eb6efe.herokuapp.com/users", {
       method: "POST",
@@ -32,10 +32,8 @@ export const SignupView = () => {
   };
 
   return (
-    <Card>
-      <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group>
+          <Form.Group controlId="formUsername">
             <Form.Label>Username:</Form.Label>
               <Form.Control
                 type="text"
@@ -46,7 +44,8 @@ export const SignupView = () => {
                 placeholder="Enter username"
               />
           </Form.Group>
-          <Form.Group>
+
+          <Form.Group controlId="formPassword">
             <Form.Label>Password:</Form.Label>
               <Form.Control
                 type="password"
@@ -57,7 +56,8 @@ export const SignupView = () => {
                 placeholder="Enter password"
               />
           </Form.Group>
-          <Form.Group>
+
+          <Form.Group controlId="formEmail">
             <Form.Label>Email:</Form.Label>
               <Form.Control
                 type="email"
@@ -67,7 +67,8 @@ export const SignupView = () => {
                 placeholder="Enter email"
               />
           </Form.Group>
-          <Form.Group>
+
+          <Form.Group controlId="formBirthday">
             <Form.Label>Birthday:</Form.Label>
               <Form.Control
                 type="date"
@@ -79,7 +80,5 @@ export const SignupView = () => {
           <br/>
           <Button variant="outline-success" type="submit">Sign Up</Button>
         </Form>
-      </Card.Body>
-    </Card>
   );
 };

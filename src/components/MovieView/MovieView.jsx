@@ -1,9 +1,44 @@
 import React from "react";
-import { Stack, Button } from "react-bootstrap"
 
-export function MovieView({ movie, onBackClick }) {
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import "./MovieView.scss";
+
+export const MovieView = ({ movies, user, token, setUser }) => {
+    const { movieId } = useParams();
+    const movie = movies.find((m) => m.id === movieId);
+
+    const updateFavorites = (movieId, action) => {
+        fetch(`https://mymoviecircle-50f243eb6efe.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+            method: action === "add" ? "POST" : "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`Failed to ${action} movie to favorites`);
+            return response.json();
+        })
+        .then(data => {
+            setUser(data);
+            localStorage.setItem("user", JSON.stringify(data));
+        })
+        .catch(error => console.error(`Error ${action}ing movie to favorites`, error));
+    };
+    
     return (
-        <Stack className="position-relative">
+        <div>
+            <Button
+                className="add-to-favorites-btn"
+                variant="link"
+                onClick={() =>
+                updateFavorites(movie.id, user.FavoriteMovies.includes(movie.id) ? "remove" : "add")
+                }
+            >
+                {user.FavoriteMovies.includes(movie.id) ? "Remove" : "Add"}
+            </Button>
+
             <div className="p-2 fs-3 fw-bold">
                 <span>Title: </span>
                 <span>{movie.Title}</span>
@@ -24,9 +59,9 @@ export function MovieView({ movie, onBackClick }) {
                 <span>Genre: </span>
                 <span>{movie.Genre}</span>
             </div>
-            <div className="p-4">
-            <Button className="w-25 p-2 position-absolute bottom-0 end-0" variant="outline-secondary" onClick={onBackClick}>BACK</Button>
-            </div>
-        </Stack>
+            <Link to={`/`}>
+                <button className="back-button">BACK</button>
+            </Link>
+        </div>
     );
-}
+};
