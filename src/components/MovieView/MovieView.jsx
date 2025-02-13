@@ -36,7 +36,7 @@ export const MovieView = ({ movies, user, token, setUser }) => {
                 updateFavorites(movie.id, user.FavoriteMovies.includes(movie.id) ? "remove" : "add")
                 }
             >
-                {user.FavoriteMovies.includes(movie.id) ? "Remove" : "Add"}
+                {user.FavoriteMovies.includes(movie.id) ? "Remove from Favorites" : "Add to Favorites"}
             </Button>
 
             <div className="p-2 fs-3 fw-bold">
