@@ -4,11 +4,17 @@ import { MainView } from './components/MainView/MainView';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './index.scss';
 import { Container } from 'react-bootstrap';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const MyFlixApplication = () => {
-    return <Container>
-        <MainView />
-    </Container>
+    return(
+        <Provider store={store}>
+            <Container>
+                <MainView />  
+            </Container>
+        </Provider>
+    );
 };
 
 const container = document.querySelector('#root');
