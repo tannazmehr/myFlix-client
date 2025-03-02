@@ -1,9 +1,18 @@
+import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Switch from "react-switch";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    const [theme, setTheme] = useState(storedTheme);
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
     return (
-        <Navbar bg="light" expand="lg" className="mb-5">
+        <Navbar bg={theme === "light" ? "light" : "dark"} variant={theme === "light" ? "light" : "dark"} expand="lg" className="mb-5">
             <Container>
                 <Navbar.Brand as={Link} to="/">
                     Movie App
@@ -34,6 +43,17 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                             </>
                             )}
                     </Nav>
+                    <div className="d-flex align-items-center">
+                        <span className="text-light me-2">
+                            {theme === "light" ? "☀ Light" : "🌙 Dark"}
+                        </span>
+                        <Switch
+                            checked={theme === "dark"}
+                            onChange={() => setTheme(theme === "light" ? "dark" : "light")}
+                            offColor="#bbb"
+                            onColor="#333"
+                        />
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

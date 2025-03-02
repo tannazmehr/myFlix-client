@@ -1,5 +1,22 @@
-.my-flix {
-  color: #4682b4;
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #fff;
+}
+
+body {
+  transition: background-color .3s, color .3s;
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.navbar, .container, .card {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 .back-button {

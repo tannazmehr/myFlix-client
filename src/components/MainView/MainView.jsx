@@ -6,7 +6,7 @@ import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../SignupView/SignupView";
 import { ProfileView } from "../ProfileView/ProfileView";
 import { NavigationBar } from "../NavigationBar/NavigationBar";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export function MainView() {
@@ -15,6 +15,8 @@ export function MainView() {
     const [user, setUser] = useState(storedUser? storedUser : null);
     const [token, setToken] = useState(storedToken? storedToken : null)
     const [movies, setMovies] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         if (!token) return;
@@ -39,6 +41,10 @@ export function MainView() {
         });
     }, [token]);
 
+    const filteredMovies = movies.filter(movie =>
+      movie.Title.toLowerCase().includes(search.toLowerCase())
+  );
+
     return (
         <BrowserRouter>
             <NavigationBar 
@@ -49,6 +55,29 @@ export function MainView() {
                     localStorage.clear();
                 }}
             />
+            <Row className="justify-content-md-center">
+                {user && (
+                    <Col md={6} className="mb-3">
+                      <Form
+                        onSubmit={(e) => e.preventDefault()}
+                        className="d-flex"
+                      >
+                        <Form.Control
+                            type="text"
+                            placeholder="Search movies..."
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            className="me-2"
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={() => setSearch(searchInput)}
+                        >Search</button>
+                      </Form>
+                    </Col>
+                )}
+            </Row>
           <Row className="justify-content-md-center">
             <Routes>
               <Route
@@ -87,7 +116,7 @@ export function MainView() {
                   <>
                     {!user ? (
                       <Navigate to="/login" replace />
-                    ) : movies.length === 0 ? (
+                    ) : filteredMovies.length === 0 ? (
                       <Col>The list is empty!</Col>
                     ) : (
                       <Col md={8}>
@@ -104,11 +133,11 @@ export function MainView() {
                   <>
                     {!user ? (
                       <Navigate to="/login" replace />
-                    ) : movies.length === 0 ? (
-                      <Col>The list is empty!</Col>
+                    ) : filteredMovies.length === 0 ? (
+                      <Col>No movie found!</Col>
                     ) : (
                       <>
-                        {movies.map((movie) => (
+                        {filteredMovies.map((movie) => (
                           <Col className="mb-4" key={movie.id} md={3}>
                             <MovieCard movie={movie} />
                           </Col>
